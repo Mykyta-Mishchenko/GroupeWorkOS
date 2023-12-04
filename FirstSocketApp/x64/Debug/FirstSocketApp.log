@@ -1,0 +1,10 @@
+﻿  Main.cpp
+C:\Users\User\Desktop\University\OS\Lab9\FirstSocketApp\Main.cpp(181,85): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\User\Desktop\University\OS\Lab9\FirstSocketApp\Main.cpp(202,81): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\User\Desktop\University\OS\Lab9\FirstSocketApp\Main.cpp(214,85): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\User\Desktop\University\OS\Lab9\FirstSocketApp\Main.cpp(57,10): warning C4101: 'recvbuf': unreferenced local variable
+C:\Users\User\Desktop\University\OS\Lab9\FirstSocketApp\Main.cpp(56,9): warning C4101: 'iSendResult': unreferenced local variable
+C:\Users\User\Desktop\University\OS\Lab9\FirstSocketApp\Main.cpp(291,99): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\User\Desktop\University\OS\Lab9\FirstSocketApp\Main.cpp(292,79): warning C4267: 'argument': conversion from 'size_t' to 'DWORD', possible loss of data
+C:\Users\User\Desktop\University\OS\Lab9\FirstSocketApp\Main.cpp(299,72): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+  FirstSocketApp.vcxproj -> C:\Users\User\Desktop\University\OS\Lab9\FirstSocketApp\x64\Debug\FirstSocketApp.exe
