@@ -183,6 +183,7 @@ int __cdecl main(void)
 
                     studentsNames.erase(studentsNames.begin() + i);
                     studentsStatus.erase(studentsStatus.begin() + i);
+                    studetsSockets.erase(studetsSockets.begin() + i);
 
                     TerminateThread(studentsThreads[i], 0);
                     CloseHandle(studentsThreads[i]);
@@ -263,7 +264,6 @@ DWORD WINAPI HandleClient(LPVOID client) {
                 EnterCriticalSection(&gCriticalSection);
 
                 currentStudentID = connectedStudents;
-                cout << currentStudentID << endl;
                 studentsNames.push_back(income);
                 ++connectedStudents;
 
