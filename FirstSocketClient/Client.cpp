@@ -16,7 +16,7 @@
 
 
 #define DEFAULT_BUFLEN 512
-#define DEFAULT_PORT "27015"
+#define DEFAULT_PORT "80"
 
 using namespace std;
 
@@ -180,10 +180,19 @@ int __cdecl main(int argc, char** argv)
                 cout << "-----------------------------------------------" << endl;
                 cout << "|                    Winers                    |" << endl;
                 cout << "-----------------------------------------------" << endl;
-                recv(ConnectSocket, recvbuf, recvbuflen, 0);
-                income = "";
-                income += recvbuf;
-                cout << income;
+                while (true) {
+                    iResult = recv(ConnectSocket, recvbuf, recvbuflen, 0);
+                    if (iResult > 0) {
+                        income = "";
+                        income += recvbuf;
+                        if (income.find("winner")) {
+                            income = "";
+                            income += recvbuf;
+                            cout << income;
+                            break;
+                        }
+                    }
+                }
                 break;
             }
         }

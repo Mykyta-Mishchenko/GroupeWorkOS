@@ -18,7 +18,7 @@
 // #pragma comment (lib, "Mswsock.lib")
 
 #define DEFAULT_BUFLEN 512
-#define DEFAULT_PORT "27015"
+#define DEFAULT_PORT "80"
 #define FILE_PATH "Ideas.txt"
 #define TIME_LENGTH 20
 
@@ -296,6 +296,20 @@ int __cdecl main(void)
             winners += "Second winner with " + to_string(secondMax) + " votes is: \n" + voitingStrings[secondIndex] + "\n";
             winners += "Third winner with " + to_string(thirdMax) + " votes is: \n" + voitingStrings[thirdIndex] + "\n";
             cout << winners;
+
+            for (int i = 0; i < studentsStatus.size();) {
+                if (studentsStatus[i] == Work) {
+                    studentsStatus[i] = Disconected;
+
+                    TerminateThread(studentsThreads[i], 0);
+                    CloseHandle(studentsThreads[i]);
+                    studentsThreads.erase(studentsThreads.begin() + i);
+
+                    continue;
+                }
+                ++i;
+            }
+
             for (int i = 0; i < studentsNames.size(); ++i) {
                 string message = "Winners";
                 send(studetsSockets[i], message.c_str(), message.length() * 2, 0);
