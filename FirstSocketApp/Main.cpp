@@ -284,7 +284,7 @@ int __cdecl main(void)
             winners += "Third winner with " + to_string(thirdMax) + " votes is: \n" + voitingStrings[thirdIndex] + "\n";
             cout << winners;
 
-            for (int i = 0; i < studentsStatus.size();) {
+            for (int i = 0; i < studentsThreads.size();) {
                 if (studentsStatus[i] == Work) {
                     studentsStatus[i] = Disconected;
 
@@ -297,7 +297,7 @@ int __cdecl main(void)
                 ++i;
             }
 
-            for (int i = 0; i < studentsNames.size(); ++i) {
+            for (int i = 0; i < studetsSockets.size(); ++i) {
                 send(studetsSockets[i], winners.c_str(), winners.length() * 2, 0);
             }
 
@@ -332,7 +332,6 @@ DWORD WINAPI HandleClient(LPVOID client) {
     string income = "";
     string outcome = "";
     string studentName;
-    vector<int> studentVotes;
     // Receive and send data with the client
     do {
         income = "";
@@ -391,18 +390,19 @@ DWORD WINAPI HandleClient(LPVOID client) {
                 send(clientSocket, outcome.c_str(), outcome.length() * 2, 0);
 
                 // Now ew count votes
-                studentVotes = voitingVotes;
+                vector<int> studentVotes(voitingVotes.size());
                 for (int i = 0; i < 3; ++i) {
                     recv(clientSocket, recvbuf, DEFAULT_BUFLEN, 0);
                     int vote = atoi(recvbuf);
                     if(vote<= studentVotes.size())
                         studentVotes[vote - 1] += 1;
                 }
-                for (int i = 0; i < studentVotes.size(); ++i) {
+                EnterCriticalSection(&gCriticalSection);
+
+                for (int i = 0; i < voitingVotes.size(); ++i) {
                     if (studentVotes[i] > 0) voitingVotes[i] += 1;
                 }
                 outcome = "END";
-                EnterCriticalSection(&gCriticalSection);
 
                 ++votedStudents;
 
