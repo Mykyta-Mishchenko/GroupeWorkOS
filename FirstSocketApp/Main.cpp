@@ -47,6 +47,7 @@ using namespace std;
 DWORD WINAPI HandleClient(LPVOID clientSocket);
 void WriteToFile(string text);
 void WriteWinnersToFile(string text);
+void ClearFile();
 
 int __cdecl main(void)
 {
@@ -226,25 +227,11 @@ int __cdecl main(void)
         }
     }
 
-    // Open board file
-    /*ifstream inputFile(FILE_PATH);
-    inputFile.is_open();
-    string fileContent = "";
-    string line = "";
-    int voitingCounter = 1;
-    while (getline(inputFile, line)) {
-        if (line == "") continue;
-        string tempLine = to_string(voitingCounter) + ") " + line;
-        voitingStrings.push_back(tempLine);
-        ++voitingCounter;
-    }
-    voitingStrings.pop_back();*/
-
     // Voiting part
     isVoiting = true;
-    cout << "-----------" << endl;
-    cout << "| Voiting |" << endl;
-    cout << "-----------" << endl;
+    cout << "-------------------------------------------------" << endl;
+    cout << "|                    Voiting                    |" << endl;
+    cout << "-------------------------------------------------" << endl;
     for (int i = 0; i < studentsNames.size(); i++) {
         string message = "Voiting";
         send(studetsSockets[i], message.c_str(), message.length() * 2, 0);
@@ -311,10 +298,11 @@ int __cdecl main(void)
             }
 
             for (int i = 0; i < studentsNames.size(); ++i) {
-                string message = "Winners";
-                send(studetsSockets[i], message.c_str(), message.length() * 2, 0);
                 send(studetsSockets[i], winners.c_str(), winners.length() * 2, 0);
             }
+
+            // Write results to file
+            ClearFile();
             WriteWinnersToFile(winners);
             break;
         }
@@ -344,6 +332,7 @@ DWORD WINAPI HandleClient(LPVOID client) {
     string income = "";
     string outcome = "";
     string studentName;
+    vector<int> studentVotes;
     // Receive and send data with the client
     do {
         income = "";
@@ -402,10 +391,15 @@ DWORD WINAPI HandleClient(LPVOID client) {
                 send(clientSocket, outcome.c_str(), outcome.length() * 2, 0);
 
                 // Now ew count votes
+                studentVotes = voitingVotes;
                 for (int i = 0; i < 3; ++i) {
                     recv(clientSocket, recvbuf, DEFAULT_BUFLEN, 0);
                     int vote = atoi(recvbuf);
-                    voitingVotes[vote - 1] += 1;
+                    if(vote<= studentVotes.size())
+                        studentVotes[vote - 1] += 1;
+                }
+                for (int i = 0; i < studentVotes.size(); ++i) {
+                    if (studentVotes[i] > 0) voitingVotes[i] += 1;
                 }
                 outcome = "END";
                 EnterCriticalSection(&gCriticalSection);
@@ -466,4 +460,19 @@ void WriteWinnersToFile(string text) {
         WriteFile(hFile, wideIdea, text.length() * 2, NULL, NULL);
         CloseHandle(hFile);
     }
+}
+
+// clear file
+void ClearFile() {
+    HANDLE hFile = CreateFileA(
+        FILE_PATH,
+        GENERIC_WRITE,
+        0,
+        NULL,
+        CREATE_ALWAYS,
+        FILE_ATTRIBUTE_NORMAL,
+        NULL
+    );
+    SetEndOfFile(hFile);
+    CloseHandle(hFile);
 }

@@ -176,23 +176,13 @@ int __cdecl main(int argc, char** argv)
                 }
                 continue;
             }
-            if (income.find("Winners") != string::npos) {
+            if (income.find("winner") != string::npos) {
                 cout << "-----------------------------------------------" << endl;
                 cout << "|                    Winers                    |" << endl;
                 cout << "-----------------------------------------------" << endl;
-                while (true) {
-                    iResult = recv(ConnectSocket, recvbuf, recvbuflen, 0);
-                    if (iResult > 0) {
-                        income = "";
-                        income += recvbuf;
-                        if (income.find("winner")) {
-                            income = "";
-                            income += recvbuf;
-                            cout << income;
-                            break;
-                        }
-                    }
-                }
+                income = "";
+                income += recvbuf;
+                cout << income;
                 break;
             }
         }

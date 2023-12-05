@@ -1,19 +1,18 @@
 ﻿  Main.cpp
-C:\Users\User\Desktop\GroupWork\GroupeWorkOS\FirstSocketApp\Main.cpp(188,85): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\User\Desktop\GroupWork\GroupeWorkOS\FirstSocketApp\Main.cpp(210,81): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\User\Desktop\GroupWork\GroupeWorkOS\FirstSocketApp\Main.cpp(222,85): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\User\Desktop\GroupWork\GroupeWorkOS\FirstSocketApp\Main.cpp(250,73): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\User\Desktop\GroupWork\GroupeWorkOS\FirstSocketApp\Main.cpp(315,81): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\User\Desktop\GroupWork\GroupeWorkOS\FirstSocketApp\Main.cpp(316,81): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\User\Desktop\GroupWork\GroupeWorkOS\FirstSocketApp\Main.cpp(64,10): warning C4101: 'recvbuf': unreferenced local variable
-C:\Users\User\Desktop\GroupWork\GroupeWorkOS\FirstSocketApp\Main.cpp(63,9): warning C4101: 'iSendResult': unreferenced local variable
-C:\Users\User\Desktop\GroupWork\GroupeWorkOS\FirstSocketApp\Main.cpp(371,76): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\User\Desktop\GroupWork\GroupeWorkOS\FirstSocketApp\Main.cpp(392,100): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\User\Desktop\GroupWork\GroupeWorkOS\FirstSocketApp\Main.cpp(400,76): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\User\Desktop\GroupWork\GroupeWorkOS\FirstSocketApp\Main.cpp(402,76): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\User\Desktop\GroupWork\GroupeWorkOS\FirstSocketApp\Main.cpp(417,72): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\User\Desktop\GroupWork\GroupeWorkOS\FirstSocketApp\Main.cpp(446,83): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\User\Desktop\GroupWork\GroupeWorkOS\FirstSocketApp\Main.cpp(447,65): warning C4267: 'argument': conversion from 'size_t' to 'DWORD', possible loss of data
-C:\Users\User\Desktop\GroupWork\GroupeWorkOS\FirstSocketApp\Main.cpp(465,83): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\User\Desktop\GroupWork\GroupeWorkOS\FirstSocketApp\Main.cpp(466,65): warning C4267: 'argument': conversion from 'size_t' to 'DWORD', possible loss of data
+C:\Users\User\Desktop\GroupWork\GroupeWorkOS\FirstSocketApp\Main.cpp(189,85): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\User\Desktop\GroupWork\GroupeWorkOS\FirstSocketApp\Main.cpp(211,81): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\User\Desktop\GroupWork\GroupeWorkOS\FirstSocketApp\Main.cpp(223,85): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\User\Desktop\GroupWork\GroupeWorkOS\FirstSocketApp\Main.cpp(237,73): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\User\Desktop\GroupWork\GroupeWorkOS\FirstSocketApp\Main.cpp(301,81): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\User\Desktop\GroupWork\GroupeWorkOS\FirstSocketApp\Main.cpp(65,10): warning C4101: 'recvbuf': unreferenced local variable
+C:\Users\User\Desktop\GroupWork\GroupeWorkOS\FirstSocketApp\Main.cpp(64,9): warning C4101: 'iSendResult': unreferenced local variable
+C:\Users\User\Desktop\GroupWork\GroupeWorkOS\FirstSocketApp\Main.cpp(360,76): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\User\Desktop\GroupWork\GroupeWorkOS\FirstSocketApp\Main.cpp(381,100): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\User\Desktop\GroupWork\GroupeWorkOS\FirstSocketApp\Main.cpp(389,76): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\User\Desktop\GroupWork\GroupeWorkOS\FirstSocketApp\Main.cpp(391,76): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\User\Desktop\GroupWork\GroupeWorkOS\FirstSocketApp\Main.cpp(411,72): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\User\Desktop\GroupWork\GroupeWorkOS\FirstSocketApp\Main.cpp(440,83): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\User\Desktop\GroupWork\GroupeWorkOS\FirstSocketApp\Main.cpp(441,65): warning C4267: 'argument': conversion from 'size_t' to 'DWORD', possible loss of data
+C:\Users\User\Desktop\GroupWork\GroupeWorkOS\FirstSocketApp\Main.cpp(459,83): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\User\Desktop\GroupWork\GroupeWorkOS\FirstSocketApp\Main.cpp(460,65): warning C4267: 'argument': conversion from 'size_t' to 'DWORD', possible loss of data
   FirstSocketApp.vcxproj -> C:\Users\User\Desktop\GroupWork\GroupeWorkOS\FirstSocketApp\x64\Debug\FirstSocketApp.exe
