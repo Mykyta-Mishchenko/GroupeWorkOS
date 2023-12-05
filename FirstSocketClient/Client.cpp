@@ -177,9 +177,12 @@ int __cdecl main(int argc, char** argv)
                 continue;
             }
             if (income.find("winner") != string::npos) {
+<<<<<<< HEAD
                 sendMessage = "Ready";
                 send(ConnectSocket, sendMessage.c_str(), sendMessage.length() * 2, 0);
                 recv(ConnectSocket, recvbuf, recvbuflen, 0);
+=======
+>>>>>>> d78ec11e04b404848a0ecbfbb7c936533e1121a1
                 cout << "-----------------------------------------------" << endl;
                 cout << "|                    Winers                    |" << endl;
                 cout << "-----------------------------------------------" << endl;
