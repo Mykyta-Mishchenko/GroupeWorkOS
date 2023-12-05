@@ -16,7 +16,7 @@
 
 
 #define DEFAULT_BUFLEN 512
-#define DEFAULT_PORT "27015"
+#define DEFAULT_PORT "80"
 
 using namespace std;
 
@@ -130,9 +130,9 @@ int __cdecl main(int argc, char** argv)
                     break;
                 }
                 else if (income.find("Now you can write") != string::npos) {
-                    cout << "------------------------------------------------" << endl;
+                    cout << "-------------------------------------------------" << endl;
                     cout << "|                    Writing                    |" << endl;
-                    cout << "------------------------------------------------" << endl;
+                    cout << "-------------------------------------------------" << endl;
                     isWritingTime = true;
                 }
                 else if (income.find("Stop") != string::npos) {
@@ -176,11 +176,13 @@ int __cdecl main(int argc, char** argv)
                 }
                 continue;
             }
-            if (income.find("Winners") != string::npos) {
+            if (income.find("winner") != string::npos) {
+                sendMessage = "Ready";
+                send(ConnectSocket, sendMessage.c_str(), sendMessage.length() * 2, 0);
+                recv(ConnectSocket, recvbuf, recvbuflen, 0);
                 cout << "-----------------------------------------------" << endl;
                 cout << "|                    Winers                    |" << endl;
                 cout << "-----------------------------------------------" << endl;
-                recv(ConnectSocket, recvbuf, recvbuflen, 0);
                 income = "";
                 income += recvbuf;
                 cout << income;

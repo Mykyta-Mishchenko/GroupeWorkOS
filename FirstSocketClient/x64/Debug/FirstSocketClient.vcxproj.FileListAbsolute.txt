@@ -1,2 +1,3 @@
 C:\Users\User\Desktop\University\OS\Lab9\FirstSocketClient\x64\Debug\FirstSocketClient.exe
 C:\Users\User\Desktop\GroupWork\GroupeWorkOS\FirstSocketClient\x64\Debug\FirstSocketClient.exe
+D:\university\3 семестр\Операційні системи\lab9\GroupeWorkOS\FirstSocketClient\x64\Debug\FirstSocketClient.exe
