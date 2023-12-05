@@ -130,6 +130,9 @@ int __cdecl main(int argc, char** argv)
                     break;
                 }
                 else if (income.find("Now you can write") != string::npos) {
+                    cout << "------------------------------------------------" << endl;
+                    cout << "|                    Writing                    |" << endl;
+                    cout << "------------------------------------------------" << endl;
                     isWritingTime = true;
                 }
                 else if (income.find("Stop") != string::npos) {
@@ -139,6 +142,53 @@ int __cdecl main(int argc, char** argv)
             }
         }
     }
+
+    // Voiting system
+    while (true) {
+        iResult = recv(ConnectSocket, recvbuf, recvbuflen, 0);
+        if (iResult > 0) {
+            string income = "";
+            income += recvbuf;
+            if (income.find("Voiting") != string::npos) {
+                cout << "-------------------------------------------------" << endl;
+                cout << "|                    Voiting                    |" << endl;
+                cout << "-------------------------------------------------" << endl;
+                sendMessage = "Ready for voiting";
+                send(ConnectSocket, sendMessage.c_str(), sendMessage.length() * 2, 0);
+                while (true) {
+                    recv(ConnectSocket, recvbuf, recvbuflen, 0);
+                    income = "";
+                    income += recvbuf;
+                    if (income.find("END") != string::npos) break;
+                    printf("%s", recvbuf);
+                    sendMessage = "Saved";
+                    send(ConnectSocket, sendMessage.c_str(), sendMessage.length() * 2, 0);
+                }
+                continue;
+            }
+            if (income.find("Vote now") != string::npos) {
+                cout << "Now wote for winner:" << endl;
+                for (int i = 0; i < 3; ++i) {
+                    string winnerNumber = "";
+                    cout << "Winner is: ";
+                    cin >> winnerNumber;
+                    send(ConnectSocket, winnerNumber.c_str(), winnerNumber.length() * 2, 0);
+                }
+                continue;
+            }
+            if (income.find("Winners") != string::npos) {
+                cout << "-----------------------------------------------" << endl;
+                cout << "|                    Winers                    |" << endl;
+                cout << "-----------------------------------------------" << endl;
+                recv(ConnectSocket, recvbuf, recvbuflen, 0);
+                income = "";
+                income += recvbuf;
+                cout << income;
+                break;
+            }
+        }
+    }
+    
     // shutdown the connection since no more data will be sent
     iResult = shutdown(ConnectSocket, SD_SEND);
     if (iResult == SOCKET_ERROR) {

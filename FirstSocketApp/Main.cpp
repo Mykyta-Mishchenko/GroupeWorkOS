@@ -11,6 +11,7 @@
 #include <string>
 #include <vector>
 #include <chrono>
+#include <fstream>
 
 // Need to link with Ws2_32.lib
 #pragma comment (lib, "Ws2_32.lib")
@@ -19,10 +20,12 @@
 #define DEFAULT_BUFLEN 512
 #define DEFAULT_PORT "27015"
 #define FILE_PATH "Ideas.txt"
-#define TIME_LENGTH 30
+#define TIME_LENGTH 20
 
 CRITICAL_SECTION gCriticalSection;
 int connectedStudents = 0;
+int votedStudents = 0;
+bool isVoiting = false;
 
 enum Status
 {
@@ -35,11 +38,15 @@ std::vector<Status> studentsStatus;
 std::vector<HANDLE> studentsThreads;
 std::vector<std::string> studentsNames;
 std::vector<SOCKET> studetsSockets;
+std::vector<std::string> voitingStrings;
+std::vector<int> voitingVotes;
 
 using namespace std;
 
 
 DWORD WINAPI HandleClient(LPVOID clientSocket);
+void WriteToFile(string text);
+void WriteWinnersToFile(string text);
 
 int __cdecl main(void)
 {
@@ -214,21 +221,97 @@ int __cdecl main(void)
                     string message = "Stop";
                     send(studetsSockets[i], message.c_str(), message.length() * 2, 0);
                 }
+                break;
             }
         }
     }
 
+    // Open board file
+    /*ifstream inputFile(FILE_PATH);
+    inputFile.is_open();
+    string fileContent = "";
+    string line = "";
+    int voitingCounter = 1;
+    while (getline(inputFile, line)) {
+        if (line == "") continue;
+        string tempLine = to_string(voitingCounter) + ") " + line;
+        voitingStrings.push_back(tempLine);
+        ++voitingCounter;
+    }
+    voitingStrings.pop_back();*/
+
+    // Voiting part
+    isVoiting = true;
+    cout << "-----------" << endl;
+    cout << "| Voiting |" << endl;
+    cout << "-----------" << endl;
+    for (int i = 0; i < studentsNames.size(); i++) {
+        string message = "Voiting";
+        send(studetsSockets[i], message.c_str(), message.length() * 2, 0);
+    }
+    for (int i = 0; i < voitingStrings.size(); ++i) {
+        cout << voitingStrings[i];
+    }
+
+    // Check if all voted
+    while (true) {
+        if (votedStudents == studentsNames.size()) {
+            for (int i = 0; i < voitingVotes.size(); ++i) {
+                cout << "Votes: " << voitingVotes[i] << "    " << voitingStrings[i];
+            }
+            int firstMax = INT_MIN, secondMax = INT_MIN, thirdMax = INT_MIN;
+            int firstIndex = -1, secondIndex = -1, thirdIndex = -1;
+
+            // Finding three winners
+            for (int i = 0; i < voitingVotes.size(); ++i) {
+                int num = voitingVotes[i];
+
+                if (num > firstMax) {
+                    thirdMax = secondMax;
+                    thirdIndex = secondIndex;
+
+                    secondMax = firstMax;
+                    secondIndex = firstIndex;
+
+                    firstMax = num;
+                    firstIndex = i;
+                }
+                else if (num > secondMax) {
+                    thirdMax = secondMax;
+                    thirdIndex = secondIndex;
+
+                    secondMax = num;
+                    secondIndex = i;
+                }
+                else if (num > thirdMax) {
+                    thirdMax = num;
+                    thirdIndex = i;
+                }
+            }
+            // Cout out vinners
+            cout << "------------------------------------------------" << endl;
+            cout << "|                    Winers                    |" << endl;
+            cout << "------------------------------------------------" << endl;
+            string winners = "First winner with " + to_string(firstMax) + " votes is: \n" + voitingStrings[firstIndex] + "\n";
+            winners += "Second winner with " + to_string(secondMax) + " votes is: \n" + voitingStrings[secondIndex] + "\n";
+            winners += "Third winner with " + to_string(thirdMax) + " votes is: \n" + voitingStrings[thirdIndex] + "\n";
+            cout << winners;
+            for (int i = 0; i < studentsNames.size(); ++i) {
+                string message = "Winners";
+                send(studetsSockets[i], message.c_str(), message.length() * 2, 0);
+                send(studetsSockets[i], winners.c_str(), winners.length() * 2, 0);
+            }
+            WriteWinnersToFile(winners);
+            break;
+        }
+    }
 
     // No longer need server socket
     closesocket(ListenSocket);
 
     // shutdown the connection since we're done
-    iResult = shutdown(ClientSocket, SD_SEND);
-    if (iResult == SOCKET_ERROR) {
-        printf("shutdown failed with error: %d\n", WSAGetLastError());
-        closesocket(ClientSocket);
-        WSACleanup();
-        return 1;
+    for (int i = 0; i < studetsSockets.size(); ++i) {
+        shutdown(studetsSockets[i], SD_SEND);
     }
 
     // cleanup
@@ -263,12 +346,16 @@ DWORD WINAPI HandleClient(LPVOID client) {
 
                 EnterCriticalSection(&gCriticalSection);
 
-                currentStudentID = connectedStudents;
                 studentsNames.push_back(income);
                 ++connectedStudents;
 
                 LeaveCriticalSection(&gCriticalSection);
 
+            }
+            else if (income.find("Idea") != string::npos && isVoiting) {
+                string message = "Voiting";
+                send(clientSocket, message.c_str(), message.length() * 2, 0);
+                continue;
             }
             else if(income.find("Idea") != string::npos) {
                 EnterCriticalSection(&gCriticalSection);
@@ -277,22 +364,39 @@ DWORD WINAPI HandleClient(LPVOID client) {
                 cout << studentName << endl << income;
 
                 // Write ideas to file
-                HANDLE hFile = CreateFileA(
-                    FILE_PATH,
-                    FILE_APPEND_DATA,
-                    0,
-                    NULL,
-                    OPEN_ALWAYS,
-                    FILE_ATTRIBUTE_NORMAL,
-                    NULL
-                );
-                if (hFile != INVALID_HANDLE_VALUE) {
-                    LPWSTR wideIdea = new wchar_t[income.size() + 1];
-                    MultiByteToWideChar(CP_ACP, 0, income.c_str(), -1, wideIdea, income.size() + 1);
-                    WriteFile(hFile, wideIdea, income.length() * 2, NULL, NULL);
-                    CloseHandle(hFile);
-                }
+                WriteToFile(income);
+                string tempLine = to_string(voitingStrings.size() + 1) + ") ";
+                tempLine += income;
+                voitingStrings.push_back(tempLine);
+                voitingVotes.push_back(0);
                 outcome = "continue";
+
+                LeaveCriticalSection(&gCriticalSection);
+            }
+            else if (income.find("Ready for voiting") != string::npos) {
+                for (int i = 0; i < voitingStrings.size(); ++i) {
+                    send(clientSocket, voitingStrings[i].c_str(), voitingStrings[i].length() * 2, 0);
+                    recv(clientSocket, recvbuf, DEFAULT_BUFLEN, 0);
+                    income = "";
+                    income += recvbuf;
+                    if (income.find("Saved") != string::npos) continue;
+                    else break;
+                }
+                outcome = "END";
+                send(clientSocket, outcome.c_str(), outcome.length() * 2, 0);
+                outcome = "Vote now";
+                send(clientSocket, outcome.c_str(), outcome.length() * 2, 0);
+
+                // Now ew count votes
+                for (int i = 0; i < 3; ++i) {
+                    recv(clientSocket, recvbuf, DEFAULT_BUFLEN, 0);
+                    int vote = atoi(recvbuf);
+                    voitingVotes[vote - 1] += 1;
+                }
+                outcome = "END";
+                EnterCriticalSection(&gCriticalSection);
+
+                ++votedStudents;
 
                 LeaveCriticalSection(&gCriticalSection);
             }
@@ -310,4 +414,42 @@ DWORD WINAPI HandleClient(LPVOID client) {
     // Cleanup
     closesocket(clientSocket);
     return 0;
+}
+
+// Write to file function
+void WriteToFile(string text) {
+    HANDLE hFile = CreateFileA(
+        FILE_PATH,
+        FILE_APPEND_DATA,
+        0,
+        NULL,
+        OPEN_ALWAYS,
+        FILE_ATTRIBUTE_NORMAL,
+        NULL
+    );
+    if (hFile != INVALID_HANDLE_VALUE) {
+        LPWSTR wideIdea = new wchar_t[text.size() + 1];
+        MultiByteToWideChar(CP_ACP, 0, text.c_str(), -1, wideIdea, text.size() + 1);
+        WriteFile(hFile, wideIdea, text.length() * 2, NULL, NULL);
+        CloseHandle(hFile);
+    }
+}
+
+// Write Winners to file
+void WriteWinnersToFile(string text) {
+    HANDLE hFile = CreateFileA(
+        FILE_PATH,
+        FILE_WRITE_DATA,
+        0,
+        NULL,
+        OPEN_ALWAYS,
+        FILE_ATTRIBUTE_NORMAL,
+        NULL
+    );
+    if (hFile != INVALID_HANDLE_VALUE) {
+        LPWSTR wideIdea = new wchar_t[text.size() + 1];
+        MultiByteToWideChar(CP_ACP, 0, text.c_str(), -1, wideIdea, text.size() + 1);
+        WriteFile(hFile, wideIdea, text.length() * 2, NULL, NULL);
+        CloseHandle(hFile);
+    }
 }
