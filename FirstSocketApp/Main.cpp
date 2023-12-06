@@ -114,9 +114,9 @@ int __cdecl main(void)
     cin >> clientsNumber;
     cout << "You are waiting for " << clientsNumber << " clients ..." << endl;
     tempNumber = clientsNumber;
+
     // Listening for a client
     iResult = listen(ListenSocket, SOMAXCONN);
-
     if (iResult == SOCKET_ERROR) {
         printf("listen failed with error: %d\n", WSAGetLastError());
         closesocket(ListenSocket);
@@ -161,7 +161,6 @@ int __cdecl main(void)
         // Confirmation, that all clients come up
         if (flag && connectedStudents == clientsNumber) {
             cout << "All students come up" << endl;
-            cout << "Studenst statuses: " << studentsStatus.size() << endl;
             flag = false;
 
             // Coosing necessary students
@@ -317,7 +316,6 @@ int __cdecl main(void)
     }
 
     // cleanup
-    closesocket(ClientSocket);
     WSACleanup();
 
     return 0;
@@ -328,7 +326,6 @@ DWORD WINAPI HandleClient(LPVOID client) {
     SOCKET clientSocket = *((SOCKET*)client);
     char recvbuf[DEFAULT_BUFLEN];
     int iResult;
-    int currentStudentID = 0;
     string income = "";
     string outcome = "";
     string studentName;
