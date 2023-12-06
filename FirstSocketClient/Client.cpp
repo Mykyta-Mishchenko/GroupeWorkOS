@@ -130,9 +130,9 @@ int __cdecl main(int argc, char** argv)
                     break;
                 }
                 else if (income.find("Now you can write") != string::npos) {
-                    cout << "------------------------------------------------" << endl;
+                    cout << "-------------------------------------------------" << endl;
                     cout << "|                    Writing                    |" << endl;
-                    cout << "------------------------------------------------" << endl;
+                    cout << "-------------------------------------------------" << endl;
                     isWritingTime = true;
                 }
                 else if (income.find("Stop") != string::npos) {

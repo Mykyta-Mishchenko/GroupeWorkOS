@@ -1,7 +1,8 @@
 ﻿  Client.cpp
-C:\Users\User\Desktop\GroupWork\GroupeWorkOS\FirstSocketClient\Client.cpp(98,83): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\User\Desktop\GroupWork\GroupeWorkOS\FirstSocketClient\Client.cpp(121,95): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\User\Desktop\GroupWork\GroupeWorkOS\FirstSocketClient\Client.cpp(157,85): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\User\Desktop\GroupWork\GroupeWorkOS\FirstSocketClient\Client.cpp(165,89): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\User\Desktop\GroupWork\GroupeWorkOS\FirstSocketClient\Client.cpp(175,91): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-  FirstSocketClient.vcxproj -> C:\Users\User\Desktop\GroupWork\GroupeWorkOS\FirstSocketClient\x64\Debug\FirstSocketClient.exe
+D:\university\3 семестр\Операційні системи\lab9\GroupeWorkOS\FirstSocketClient\Client.cpp(98,77): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+D:\university\3 семестр\Операційні системи\lab9\GroupeWorkOS\FirstSocketClient\Client.cpp(121,89): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+D:\university\3 семестр\Операційні системи\lab9\GroupeWorkOS\FirstSocketClient\Client.cpp(157,79): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+D:\university\3 семестр\Операційні системи\lab9\GroupeWorkOS\FirstSocketClient\Client.cpp(165,83): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+D:\university\3 семестр\Операційні системи\lab9\GroupeWorkOS\FirstSocketClient\Client.cpp(175,85): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+D:\university\3 семестр\Операційні системи\lab9\GroupeWorkOS\FirstSocketClient\Client.cpp(181,79): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+  FirstSocketClient.vcxproj -> D:\university\3 семестр\Операційні системи\lab9\GroupeWorkOS\FirstSocketClient\x64\Debug\FirstSocketClient.exe
